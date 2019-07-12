@@ -24,7 +24,7 @@ for md_file in ${SRC_FOLDER}*.${INPUT_FORMAT}
 do
     md_file_base_name=$(basename $md_file .${INPUT_FORMAT})
     output_file=${OUTPUT_FOLDER}${md_file_base_name}.${OUTPUT_FORMAT}
-    ${CC} -s --from gfm --to html5 --css ${CSS_FILE} $md_file -o ${output_file} --metadata pagetitle="Daily Report"
+    ${CC} -s --from markdown_github --to html5 --css ${CSS_FILE} $md_file -o ${output_file} --metadata pagetitle="Daily Report"
 
     # Replace the '[ ]' with a checkbox manually !
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROOT_FOLDER=/home/taitnet/Documents/API_Adaptor/DailyReports
+ROOT_FOLDER=/home/quentin/Popo
 SRC_FOLDER=${ROOT_FOLDER}/src
 DOC_FOLDER=${ROOT_FOLDER}/doc
 FORMAT=md
