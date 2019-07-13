@@ -7,6 +7,7 @@ extern crate subprocess;
 use crate::config_file::*;
 use crate::file_creation::*;
 use clap::{App, SubCommand};
+use std::env;
 
 /// Returns the name of the last MD and HTML files
 fn get_files_names(index: usize, root_path: String) -> (String, String) {
@@ -31,11 +32,10 @@ fn get_files_names(index: usize, root_path: String) -> (String, String) {
 }
 
 fn main() -> std::io::Result<()> {
-    let json_file = "config.json";
-    let config = ConfigFile::from_json(json_file);
+    let home = env::var("HOME").expect("Could not find $HOME");
 
-    // let filename = config.get_last_file();
-    // println!("LAST FILE: {}", filename);
+    let json_file = format!("{}/.config/popo/config.json", home);
+    let config = ConfigFile::from_json(json_file);
 
     let index = config.get_last_index();
     let title = config.title();
@@ -76,7 +76,15 @@ fn main() -> std::io::Result<()> {
 
         config.open_file_in_editor(&future_md);
     } else {
-        config.open_file_in_editor(&last_md);
+        if index == 0 {
+            MarkdownFile::new(&future_md)
+                .with_title(title)
+                .with_index(index + 1)
+                .generate_file()?;
+            config.open_file_in_editor(&future_md);
+        } else {
+            config.open_file_in_editor(&last_md);
+        }
     }
 
     Ok(())

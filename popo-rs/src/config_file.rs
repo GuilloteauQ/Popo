@@ -27,7 +27,8 @@ pub struct ConfigFile {
 impl ConfigFile {
     /// Take the content of a JSON file and returns the structure associated
     pub fn from_json<T: AsRef<str>>(json_file: T) -> Self {
-        let mut file = File::open(json_file.as_ref()).expect("Could not open the config file");
+        let path = std::path::Path::new(json_file.as_ref());
+        let mut file = File::open(path).expect("Could not open the config file");
         let mut contents = String::new();
         file.read_to_string(&mut contents)
             .expect("Could not read the config file");
